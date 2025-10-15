@@ -59,16 +59,12 @@ namespace Buscador_de_Respuestos
             public float Precio;
         }
 
-        Repuesto nuevoRepuesto;
-        Repuesto[] VecRepuestos = new Repuesto[100];
+
+        string[,] matRepuesto = new string[100, 5];
+        int indiceFila = 0;
         private void btnIngresar_Click(object sender, EventArgs e)
         {
 
-            if (Indice >= VecRepuestos.Length)
-            {
-                MessageBox.Show("Ya se cargaron los 100 repuestos.");
-                return;
-            }
 
             if (cmbMarcaI.SelectedIndex == -1)
             {
@@ -100,19 +96,22 @@ namespace Buscador_de_Respuestos
                 return;
             }
 
-            Repuesto nuevoRepuesto = new Repuesto();
-            nuevoRepuesto.Marca = cmbMarcaI.SelectedItem.ToString()[0];
-            nuevoRepuesto.Origen = opcNacionalI.Checked ? 'N' : 'I';
-            nuevoRepuesto.Numero = Convert.ToInt32(txtNumero.Text);
-            nuevoRepuesto.Descripcion = txtDescripcion.Text;
-            nuevoRepuesto.Precio = float.Parse(txtPrecio.Text);
+            {
+                matRepuesto[indiceFila, 0] = cmbMarcaI.Text;
+                if (opcImportadoI.Checked)
+                    matRepuesto[indiceFila, 1] = "Nacional";
+                else if (opcNacionalI.Checked)
+                    matRepuesto[indiceFila, 1] = "Importado";
+                matRepuesto[indiceFila, 2] = txtNumero.Text;
+                matRepuesto[indiceFila, 3] = txtDescripcion.Text;
+                matRepuesto[indiceFila, 4] = txtPrecio.Text;
+                indiceFila++;
 
-            VecRepuestos[Indice] = nuevoRepuesto;
-            Indice++;
+                Indice++;
 
-            MessageBox.Show("Repuesto cargado correctamente.");
+                MessageBox.Show("Repuesto cargado correctamente.");
+            }
         }
-
 
         private void cmbMarcaC_SelectedIndexChanged(object sender, EventArgs e)
         {

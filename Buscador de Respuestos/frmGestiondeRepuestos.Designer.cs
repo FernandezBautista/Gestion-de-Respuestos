@@ -63,10 +63,10 @@
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(140, 133);
+            this.txtDescripcion.Location = new System.Drawing.Point(143, 133);
             this.txtDescripcion.MaxLength = 60;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(145, 20);
+            this.txtDescripcion.Size = new System.Drawing.Size(142, 20);
             this.txtDescripcion.TabIndex = 11;
             this.txtDescripcion.TextChanged += new System.EventHandler(this.txtDescripcion_TextChanged);
             // 
@@ -96,15 +96,16 @@
             // cmbMarcaI
             // 
             this.cmbMarcaI.BackColor = System.Drawing.SystemColors.Window;
+            this.cmbMarcaI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMarcaI.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.cmbMarcaI.FormattingEnabled = true;
             this.cmbMarcaI.Items.AddRange(new object[] {
             "P",
             "C",
             "F"});
-            this.cmbMarcaI.Location = new System.Drawing.Point(140, 59);
+            this.cmbMarcaI.Location = new System.Drawing.Point(143, 59);
             this.cmbMarcaI.Name = "cmbMarcaI";
-            this.cmbMarcaI.Size = new System.Drawing.Size(145, 21);
+            this.cmbMarcaI.Size = new System.Drawing.Size(142, 21);
             this.cmbMarcaI.TabIndex = 14;
             this.cmbMarcaI.SelectedIndexChanged += new System.EventHandler(this.cmbMarcaI_SelectedIndexChanged);
             // 
@@ -123,7 +124,7 @@
             // 
             this.opcImportadoI.AutoSize = true;
             this.opcImportadoI.ForeColor = System.Drawing.Color.Black;
-            this.opcImportadoI.Location = new System.Drawing.Point(213, 87);
+            this.opcImportadoI.Location = new System.Drawing.Point(216, 87);
             this.opcImportadoI.Name = "opcImportadoI";
             this.opcImportadoI.Size = new System.Drawing.Size(72, 17);
             this.opcImportadoI.TabIndex = 17;
@@ -136,7 +137,7 @@
             // 
             this.opcNacionalI.AutoSize = true;
             this.opcNacionalI.ForeColor = System.Drawing.Color.Black;
-            this.opcNacionalI.Location = new System.Drawing.Point(140, 87);
+            this.opcNacionalI.Location = new System.Drawing.Point(143, 87);
             this.opcNacionalI.Name = "opcNacionalI";
             this.opcNacionalI.Size = new System.Drawing.Size(67, 17);
             this.opcNacionalI.TabIndex = 16;
@@ -159,10 +160,10 @@
             // 
             // txtNumero
             // 
-            this.txtNumero.Location = new System.Drawing.Point(140, 110);
+            this.txtNumero.Location = new System.Drawing.Point(143, 110);
             this.txtNumero.MaxLength = 6;
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(145, 20);
+            this.txtNumero.Size = new System.Drawing.Size(142, 20);
             this.txtNumero.TabIndex = 19;
             this.txtNumero.TextChanged += new System.EventHandler(this.txtNumero_TextChanged);
             this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumero_KeyPress);
@@ -182,9 +183,9 @@
             // txtPrecio
             // 
             this.txtPrecio.ForeColor = System.Drawing.Color.Black;
-            this.txtPrecio.Location = new System.Drawing.Point(140, 156);
+            this.txtPrecio.Location = new System.Drawing.Point(143, 156);
             this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(145, 20);
+            this.txtPrecio.Size = new System.Drawing.Size(142, 20);
             this.txtPrecio.TabIndex = 22;
             this.txtPrecio.TextChanged += new System.EventHandler(this.txtPrecio_TextChanged);
             this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
@@ -205,9 +206,9 @@
             // 
             this.btnIngresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnIngresar.ForeColor = System.Drawing.Color.DarkGreen;
-            this.btnIngresar.Location = new System.Drawing.Point(151, 191);
+            this.btnIngresar.Location = new System.Drawing.Point(143, 191);
             this.btnIngresar.Name = "btnIngresar";
-            this.btnIngresar.Size = new System.Drawing.Size(134, 23);
+            this.btnIngresar.Size = new System.Drawing.Size(142, 23);
             this.btnIngresar.TabIndex = 23;
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.UseVisualStyleBackColor = true;
@@ -225,6 +226,7 @@
             // 
             // cmbMarcaC
             // 
+            this.cmbMarcaC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMarcaC.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.cmbMarcaC.FormattingEnabled = true;
             this.cmbMarcaC.Items.AddRange(new object[] {
@@ -400,6 +402,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(321, 302);
             this.Controls.Add(this.tabControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmGestiondeRepuestos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
