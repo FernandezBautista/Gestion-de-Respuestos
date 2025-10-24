@@ -16,41 +16,34 @@ namespace Buscador_de_Respuestos
         public frmGestiondeRepuestos()
         {
             InitializeComponent();
+            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecio_KeyPress);
         }
 
         private void cmbMarcaI_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void opcNacionalI_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void opcImportadoI_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void txtNumero_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void txtDescripcion_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void txtPrecio_TextChanged(object sender, EventArgs e)
         {
-
         }
 
-        int Indice = 0;
         public struct Repuesto
-
         {
             public char Marca;
             public char Origen;
@@ -59,20 +52,17 @@ namespace Buscador_de_Respuestos
             public float Precio;
         }
 
+        List<Repuesto> listaRepuestos = new List<Repuesto>();
 
-        string[,] matRepuesto = new string[100, 5];
-        int indiceFila = 0;
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-
-
             if (cmbMarcaI.SelectedIndex == -1)
             {
                 MessageBox.Show("Debe seleccionar una marca.");
                 return;
             }
 
-            if (opcNacionalI.Checked && opcImportadoI.Checked)
+            if (!opcNacionalI.Checked && !opcImportadoI.Checked)
             {
                 MessageBox.Show("Debe seleccionar el origen.");
                 return;
@@ -96,69 +86,122 @@ namespace Buscador_de_Respuestos
                 return;
             }
 
+            int numeroIngresado;
+            if (!int.TryParse(txtNumero.Text, out numeroIngresado))
             {
-                matRepuesto[indiceFila, 0] = cmbMarcaI.Text;
-                if (opcImportadoI.Checked)
-                    matRepuesto[indiceFila, 1] = "Nacional";
-                else if (opcNacionalI.Checked)
-                    matRepuesto[indiceFila, 1] = "Importado";
-                matRepuesto[indiceFila, 2] = txtNumero.Text;
-                matRepuesto[indiceFila, 3] = txtDescripcion.Text;
-                matRepuesto[indiceFila, 4] = txtPrecio.Text;
-                indiceFila++;
+                MessageBox.Show("El número ingresado no es válido.");
+                return;
+            }
 
-                Indice++;
+            foreach (Repuesto rep in listaRepuestos)
+            {
+                if (rep.Numero == numeroIngresado)
+                {
+                    MessageBox.Show("Ya existe un repuesto con ese número.", "Error: Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            try
+            {
+                Repuesto nuevoRepuesto = new Repuesto();
+
+                nuevoRepuesto.Marca = cmbMarcaI.Text[0];
+
+                if (opcNacionalI.Checked)
+                    nuevoRepuesto.Origen = 'N';
+                else
+                    nuevoRepuesto.Origen = 'I';
+
+                nuevoRepuesto.Numero = numeroIngresado;
+                nuevoRepuesto.Descripcion = txtDescripcion.Text;
+                nuevoRepuesto.Precio = Convert.ToSingle(txtPrecio.Text);
+
+                listaRepuestos.Add(nuevoRepuesto);
 
                 MessageBox.Show("Repuesto cargado correctamente.");
+                btnLimpiar_Click(sender, e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al convertir datos. Revise los campos. \n" + ex.Message);
             }
         }
 
         private void cmbMarcaC_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void opcNacionalC_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void opcImportadoC_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-        
-        {
             if (cmbMarcaC.SelectedIndex == -1)
-                MessageBox.Show("Debe seleccionar una marca para realizar la consulta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (!opcImportadoC.Checked && !opcNacionalI.Checked)
-                MessageBox.Show("Debe elegir el origen para realizar la consulta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
             {
-               char marca = cmbMarcaC.SelectedItem.ToString()[0];
-               char origen = opcNacionalC.Checked ? 'N' : 'I';
+                MessageBox.Show("Debe seleccionar una marca para realizar la consulta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-        
-        
+
+            if (!opcImportadoC.Checked && !opcNacionalC.Checked)
+            {
+                MessageBox.Show("Debe elegir el origen para realizar la consulta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            char marcaConsulta = cmbMarcaC.Text[0];
+            char origenConsulta = opcNacionalC.Checked ? 'N' : 'I';
+
+            lstResultados.Items.Clear();
+
+            int cantidadEncontrada = 0;
+
+            foreach (Repuesto rep in listaRepuestos)
+            {
+                if (rep.Marca == marcaConsulta && rep.Origen == origenConsulta)
+                {
+                    string item = $"Nro: {rep.Numero} - {rep.Descripcion} - Precio: ${rep.Precio}";
+                    lstResultados.Items.Add(item);
+                    cantidadEncontrada++;
+                }
+            }
+
+            if (cantidadEncontrada == 0)
+            {
+                MessageBox.Show("No se encontraron repuestos con esos criterios.");
+            }
         }
 
         private void frmGestiondeRepuestos_Load(object sender, EventArgs e)
         {
-
         }
 
         private void lblNumeroI_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsNumber(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsDigit(e.KeyChar) ||
+                e.KeyChar == Convert.ToChar(Keys.Back) ||
+                (e.KeyChar == ',' && !txtPrecio.Text.Contains(",")))
             {
                 e.Handled = false;
             }
@@ -182,7 +225,6 @@ namespace Buscador_de_Respuestos
 
         private void lblPrecio_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -192,12 +234,10 @@ namespace Buscador_de_Respuestos
 
         private void lblConsulta_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -215,33 +255,30 @@ namespace Buscador_de_Respuestos
             cmbMarcaC.SelectedIndex = -1;
             opcNacionalC.Checked = false;
             opcImportadoC.Checked = false;
+            lstResultados.Items.Clear();
         }
 
         private void lblOrigenI_Click(object sender, EventArgs e)
         {
-
         }
 
         private void lblDescripcionI_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label1_Click_1(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void tabRegistro_Click(object sender, EventArgs e)
         {
-
+        }
+        private void lstResultados_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }
-
-
