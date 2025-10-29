@@ -102,30 +102,30 @@ namespace Buscador_de_Respuestos
                 }
             }
 
-            try
+            float precioIngresado;
+            if (!float.TryParse(txtPrecio.Text, out precioIngresado))
             {
-                Repuesto nuevoRepuesto = new Repuesto();
-
-                nuevoRepuesto.Marca = cmbMarcaI.Text[0];
-
-                if (opcNacionalI.Checked)
-                    nuevoRepuesto.Origen = 'N';
-                else
-                    nuevoRepuesto.Origen = 'I';
-
-                nuevoRepuesto.Numero = numeroIngresado;
-                nuevoRepuesto.Descripcion = txtDescripcion.Text;
-                nuevoRepuesto.Precio = Convert.ToSingle(txtPrecio.Text);
-
-                listaRepuestos.Add(nuevoRepuesto);
-
-                MessageBox.Show("Repuesto cargado correctamente.");
-                btnLimpiar_Click(sender, e);
+                MessageBox.Show("El precio ingresado no es válido. Revise el formato.");
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al convertir datos. Revise los campos. \n" + ex.Message);
-            }
+
+            Repuesto nuevoRepuesto = new Repuesto();
+
+            nuevoRepuesto.Marca = cmbMarcaI.Text[0];
+
+            if (opcNacionalI.Checked)
+                nuevoRepuesto.Origen = 'N';
+            else
+                nuevoRepuesto.Origen = 'I';
+
+            nuevoRepuesto.Numero = numeroIngresado;
+            nuevoRepuesto.Descripcion = txtDescripcion.Text;
+            nuevoRepuesto.Precio = precioIngresado;
+
+            listaRepuestos.Add(nuevoRepuesto);
+
+            MessageBox.Show("Repuesto cargado correctamente.");
+            btnLimpiar_Click(sender, e);
         }
 
         private void cmbMarcaC_SelectedIndexChanged(object sender, EventArgs e)
